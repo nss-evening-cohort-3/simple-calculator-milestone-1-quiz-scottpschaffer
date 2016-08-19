@@ -93,7 +93,25 @@ namespace SimpleCalculator.Tests
             string division3 = " / 321533";
             Expression ExpDiv3 = new Expression();
             string[] symbol = ExpDiv3.Extract(division3);
-            Assert.AreEqual(int.Parse(symbol[0]), "Failed");
+            Assert.AreEqual(symbol[0], "Failed");
+        }
+
+        [TestMethod]
+        public void SpecifyBadOperand1()
+        {
+            string operand1 = " 1 q 321533";
+            Expression ExpOp1 = new Expression();
+            string[] symbol = ExpOp1.Extract(operand1);
+            Assert.AreEqual(symbol[0], "Failed");
+        }
+
+        [TestMethod]
+        public void SpecifyBadOperand2()
+        {
+            string operand2 = " 1 6 321533";
+            Expression ExpOp2 = new Expression();
+            string[] symbol = ExpOp2.Extract(operand2);
+            Assert.AreEqual(symbol[0], "Failed");
         }
     }
 }
