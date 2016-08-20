@@ -8,8 +8,9 @@ namespace SimpleCalculator
 {
     public class Stack
     {
-        List<string> theStack = new List<string>();
-        
+        private List<string> theStack = new List<string>();
+        private Dictionary<string, string> theVariables = new Dictionary<string, string>();
+
         public void add2Stack(string listq, string list)
         {
             theStack.Add(listq);
@@ -35,6 +36,30 @@ namespace SimpleCalculator
             }
             return result;
         }
-       
+
+        public void add2Dictionary(string theKey, string theValue)
+        {
+            theVariables.Add(theKey, theValue);
+        }
+
+        public string readFromDictionary(string theKey)
+        {
+            string theValue = "Failed";
+            if (theVariables.ContainsKey(theKey))
+            {
+                theValue = theVariables[theKey];
+            }
+            return theValue;
+        }
+
+        public bool doesKeyAlreadyExist(string theKey)
+        {
+            bool isThere = false;
+            if (theVariables.ContainsKey(theKey))
+            {
+                isThere = true;
+            }
+            return isThere;
+        }
     }
 }
