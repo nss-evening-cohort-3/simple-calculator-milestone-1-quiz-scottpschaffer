@@ -9,7 +9,7 @@ namespace SimpleCalculator
 {
     public class Expression
     {
-        private Stack stack = new Stack();
+        private Stack stack1 = new Stack();
 
         public string[] Extract(string exp)
         {
@@ -39,6 +39,10 @@ namespace SimpleCalculator
                 exp1[1] = g1["symbol"].Value;
                 exp1[2] = g1["sNum"].Value;
             }
+            else if ((exp == "list") || (exp == "listq"))
+            {
+                exp1[0] = exp;
+            }
             else if (m2.Success)
             {
                 GroupCollection g2 = m2.Groups;
@@ -65,34 +69,35 @@ namespace SimpleCalculator
                 exp1[1] = g5["symbol"].Value;
                 exp1[2] = g5["vari"].Value;
             }
+
             return exp1;
         }
 
-        public int Process(string[] formula)
+        public string Process(string[] formula, string originalInput)
         {
             Math m1 = new Math();
 
-            int answer = 0;
+            string answer = "";
             switch (formula[1])
             {
                 case "+":
-                    answer = m1.AddNumbers(int.Parse(formula[0]), int.Parse(formula[2]));
+                    answer = m1.AddNumbers(int.Parse(formula[0]), int.Parse(formula[2])).ToString();
                     break;
                 case "-":
-                    answer = m1.SubtractNumbers(int.Parse(formula[0]), int.Parse(formula[2]));
+                    answer = m1.SubtractNumbers(int.Parse(formula[0]), int.Parse(formula[2])).ToString();
                     break;
                 case "%":
-                    answer = m1.ModuloNumbers(int.Parse(formula[0]), int.Parse(formula[2]));
+                    answer = m1.ModuloNumbers(int.Parse(formula[0]), int.Parse(formula[2])).ToString();
                     break;
                 case "*":
-                    answer = m1.MultiplyNumbers(int.Parse(formula[0]), int.Parse(formula[2]));
+                    answer = m1.MultiplyNumbers(int.Parse(formula[0]), int.Parse(formula[2])).ToString();
                     break;
                 case "/":
                     int f0 = int.Parse(formula[0]);
                     int f2 = int.Parse(formula[2]);
                     if (f2 != 0)
                     {
-                        answer = m1.DivideNumbers(f0, f2);
+                        answer = m1.DivideNumbers(f0, f2).ToString();
                     }
                     else
                     {
@@ -101,26 +106,33 @@ namespace SimpleCalculator
                        
                     break;
                 case "=":
-                    if (!stack.doesKeyAlreadyExist(formula[0]))
+                    if (!stack1.doesKeyAlreadyExist(formula[0]))
                     {
-                        stack.add2Dictionary(formula[0], formula[2]);
+                        stack1.add2Dictionary(formula[0], formula[2]);
                         Console.WriteLine("   = Saved \'" + formula[0] + "\' as \'" + formula[2] + "\'");
                     }
                     else
                         goto default;
                     break;
                 case "Failed":
+                    string ans = "";
                     if (formula[0] != "Failed")
                     {
-                        string ans = stack.readFromDictionary(formula[0]);
-                        answer = int.Parse(ans);
+                        if ((formula[0] == "list") || (formula[0] == "listq"))
+                        {
+                            answer = stack1.readFromStack(formula[0]);
+                        }
+                        else
+                        {
+                            answer = stack1.readFromDictionary(formula[0]);
+                        }
                     }
                     break;
                 default:
                     Console.WriteLine("Error!");
                     break;
             }
-
+            stack1.add2Stack(originalInput, answer);
             return answer;
         }
     }
