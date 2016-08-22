@@ -21,7 +21,7 @@ namespace SimpleCalculator
                 Console.Write("[" + c + "]> ");
                 inp = Console.ReadLine().ToLower();
                 string[] x1 = e1.Extract(inp);
-                if (x1[0] != "Failed")
+                if (x1[0] != "Error!")
                 {
                     x2 = e1.Process(x1, inp);
                     Console.WriteLine("   = " + x2);

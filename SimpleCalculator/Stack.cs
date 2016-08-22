@@ -19,8 +19,7 @@ namespace SimpleCalculator
 
         public string readFromStack(string which)
         {
-            string result = "empty stack";
-            if (theStack.Count > 0)
+            string result = "Error!";
             {
                 switch (which)
                 {
@@ -44,7 +43,7 @@ namespace SimpleCalculator
 
         public string readFromDictionary(string theKey)
         {
-            string theValue = "Failed";
+            string theValue = "Error!";
             if (theVariables.ContainsKey(theKey))
             {
                 theValue = theVariables[theKey];
