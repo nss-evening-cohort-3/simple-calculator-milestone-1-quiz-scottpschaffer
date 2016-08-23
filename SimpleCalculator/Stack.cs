@@ -24,9 +24,11 @@ namespace SimpleCalculator
                 switch (which)
                 {
                     case "listq":
+                        // Math equation is before Answer on Stack (Odd numbered)
                         result = theStack[theStack.Count - 2];
                         break;
                     case "list":
+                        // Answer is second on stack (Even numbered)
                         result = theStack[theStack.Count - 1];
                         break;
                     default:
